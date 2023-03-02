@@ -1,0 +1,17 @@
+{
+  "name": "unit-test-paguyuban-solo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "rizkyarifnur@gmail.com",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/app.mjs"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "nedb-promises": "^6.2.1"
+  },
+  "devDependencies": {
+    "jest": "^29.4.3"
+  }
+}
