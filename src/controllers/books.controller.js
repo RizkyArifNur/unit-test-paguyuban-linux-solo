@@ -1,20 +1,23 @@
-import * as expres from "express";
-import { bookResponseMapper } from "../mappers/book.mapper.mjs";
-import { bookRepository } from "../repositories/book.repository.mjs";
-const router = expres.Router();
 
+const { bookResponseMapper } = require('../mappers/book.mapper.js')
+const { bookRepository } = require('../repositories/book.repository.js')
+const express = require('express')
 /**
- * Get list of books
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
  */
-router.get("/", async (req, res) => {
+async function listBook(req, res) {
   const books = await bookRepository.findAll();
   res.send(bookResponseMapper.mapMany(books));
-});
+}
 
 /**
- * Get detail book by id
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
  */
-router.get("/:id", async (req, res) => {
+async function getBookById(req, res) {
   const book = await bookRepository.findById(req.params.id);
   if (!book) {
     res.status(404).json({
@@ -23,23 +26,27 @@ router.get("/:id", async (req, res) => {
   } else {
     res.send(bookResponseMapper.mapOne(book));
   }
-});
+}
 
 /**
- * Create book
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
  */
-router.post("/", async (req, res) => {
+async function createBook(req, res) {
   const bookToInsert = req.body;
   const id = await bookRepository.create(bookToInsert);
   res.status(201).json({
     id,
   });
-});
+}
 
 /**
- * Update book
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
  */
-router.patch("/:id", async (req, res) => {
+async function updateBookById(req, res) {
   const bookId = req.params.id;
   const bookToUpdate = await bookRepository.findById(bookId);
   if (!bookToUpdate) {
@@ -56,12 +63,14 @@ router.patch("/:id", async (req, res) => {
   res.status(200).json({
     id: bookId,
   });
-});
+}
 
 /**
- * Delete book by id
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
  */
-router.delete("/:id", async (req, res) => {
+async function deleteBookById(req, res) {
   const bookId = req.params.id;
   const bookToDelete = await bookRepository.findById(bookId);
   if (!bookToDelete) {
@@ -73,6 +82,12 @@ router.delete("/:id", async (req, res) => {
 
   await bookRepository.deleteById(bookId);
   res.sendStatus(204);
-});
+}
 
-export const bookRouter = router;
+module.exports = {
+  listBook,
+  getBookById,
+  createBook,
+  updateBookById,
+  deleteBookById
+}

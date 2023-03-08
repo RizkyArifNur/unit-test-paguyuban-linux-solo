@@ -1,5 +1,7 @@
-import DataStore from "nedb-promises";
-import { join } from "path";
+
+const DataStore = require('nedb-promises')
+const {  join } = require('path')
+
 const db = DataStore.create({
   filename: join(process.cwd(), "src/db/books.db"),
 });
@@ -27,10 +29,14 @@ async function deleteById(id) {
     await db.removeOne({ _id: id })
 }
 
-export const bookRepository = {
+const bookRepository = {
   findById,
   findAll,
   create,
   update,
   deleteById,
 };
+
+module.exports = {
+  bookRepository
+}

@@ -10,7 +10,11 @@ function mapMany(books) {
     return books.map(mapOne)
 }
 
-export const bookResponseMapper = {
+const bookResponseMapper = {
     mapOne,
     mapMany
+}
+
+module.exports = {
+    bookResponseMapper
 }

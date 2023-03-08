@@ -1,7 +1,6 @@
-import express from 'express'
-import { bookRouter } from './controllers/books.controller.mjs'
-import { healthRouter } from './controllers/health.controller.mjs'
-
+const express = require('express')
+const { bookRouter } = require('./routers/book.router')
+const { healthRouter } = require('./routers/health.router')
 const app = express()
 
 app.use(express.json())
